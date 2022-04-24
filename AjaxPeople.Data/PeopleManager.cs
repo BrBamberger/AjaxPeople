@@ -20,7 +20,7 @@ namespace AjaxPeople.Data
         {
             using var connection = new SqlConnection(_connectionString);
             using var cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT * FROM People";
+            cmd.CommandText = "SELECT * FROM Person";
             connection.Open();
             List<Person> people = new();
             var reader = cmd.ExecuteReader();
@@ -40,9 +40,8 @@ namespace AjaxPeople.Data
         {
             using var connection = new SqlConnection(_connectionString);
             using var cmd = connection.CreateCommand();
-            cmd.CommandText = "INSERT INTO People (FirstName, LastName, Age) " +
-                "VALUES (@firstName, @lastName, @age) " +
-                "SELECT SCOPE_IDENTITY";
+            cmd.CommandText = "INSERT INTO Person (FirstName, LastName, Age) " +
+                "VALUES (@firstName, @lastName, @age) SELECT SCOPE_IDENTITY()";
             cmd.Parameters.AddWithValue("@firstName", person.FirstName);
             cmd.Parameters.AddWithValue("@lastName", person.LastName);
             cmd.Parameters.AddWithValue("@age", person.Age);
@@ -50,14 +49,27 @@ namespace AjaxPeople.Data
             person.Id = (int)(decimal)cmd.ExecuteScalar();
         }
 
+        //public void AddPerson(Person person)
+        //{
+        //    using var conn = new SqlConnection(_connectionString);
+        //    using var cmd = conn.CreateCommand();
+        //    cmd.CommandText = "INSERT INTO People (FirstName, LastName, Age) " +
+        //        "VALUES(@f, @l, @a) SELECT SCOPE_IDENTITY()";
+        //    cmd.Parameters.AddWithValue("@f", person.FirstName);
+        //    cmd.Parameters.AddWithValue("@l", person.LastName);
+        //    cmd.Parameters.AddWithValue("@a", person.Age);
+        //    conn.Open();
+        //    person.Id = (int)(decimal)cmd.ExecuteScalar();
+        //}
+
         public void Delete(int id)
         {
             using var connection = new SqlConnection(_connectionString);
             using var cmd = connection.CreateCommand();
-            cmd.CommandText = "DELETE FROM People WHERE Id = @id";          
+            cmd.CommandText = "DELETE FROM Person WHERE Id = @id";          
             cmd.Parameters.AddWithValue("@id", id);
             connection.Open();
-            var reader = cmd.ExecuteReader();
+            cmd.ExecuteNonQuery(); 
             connection.Close();
             
         }
@@ -66,11 +78,12 @@ namespace AjaxPeople.Data
         {
             using var connection = new SqlConnection(_connectionString);
             using var cmd = connection.CreateCommand();
-            cmd.CommandText = "UPDATE PEOPLE SET FirstName = @firstName, LastName =@lastName, Age = @age " +
+            cmd.CommandText = "UPDATE PERSON SET FirstName = @firstName, LastName =@lastName, Age = @age " +
                 "WHERE Id = @id";
             cmd.Parameters.AddWithValue("@firstName", person.FirstName);
             cmd.Parameters.AddWithValue("@lastName", person.LastName);
             cmd.Parameters.AddWithValue("@age", person.Age);
+            cmd.Parameters.AddWithValue("@id", person.Id);
             connection.Open();
             cmd.ExecuteNonQuery();
             connection.Close();

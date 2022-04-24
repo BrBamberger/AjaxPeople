@@ -3,13 +3,13 @@
         <input type="text" name="firstName" id="first-name" placeholder="First Name" class="form-control" />
     </div>
     <div class="col-md-3">
-        <input type="text" name="lastName" id="last-name" placeholder="Lasst Name" class="form-control" />
+        <input type="text" name="lastName" id="last-name" placeholder="Last Name" class="form-control" />
     </div>
     <div class="col-md-3">
         <input type="text" name="age" id="age" placeholder="Age" class="form-control" />
     </div>
     <div class="col-md-3">
-        <button class="btn btn-primary" id="add-person">Add Person</button>
+        <button class="btn btn-primary btn-block" id="add-person">Add Person</button>
     </div>
 </div>
 
@@ -20,14 +20,42 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Age</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>        
         </thead>
         <tbody>
-
+            
         </tbody>
     </table>
 </div>
 
-@section Scripts {
-<script src="/js/People.js"></script>
-}
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="first-name" class="form-control" placeholder="First Name" />
+                <br />
+                <input type="text" id="last-name" class="form-control" placeholder="Last Name" />
+                <br />
+                <input type="text" id="age" class="form-control" placeholder="Age" />
+                <br />
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="add">Add</button>*@
+                <button type="button" class="btn btn-success" id="update">Update</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    @section Scripts {
+        <script src="/js/People.js"></script>
+    }

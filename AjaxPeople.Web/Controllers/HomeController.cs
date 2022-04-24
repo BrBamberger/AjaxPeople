@@ -13,7 +13,7 @@ namespace AjaxPeople.Web.Controllers
     public class HomeController : Controller
     {
 
-        private string _connectionString = @"Data Source =.\sqlexpress;Initial Catalog=PeopleAndCars;IntegratedSecurity=true;";
+        private string _connectionString = @"Data Source =.\sqlexpress;Initial Catalog=PeopleAndCars;Integrated Security=true;";
         public IActionResult Index()
         {
             return View();
@@ -34,19 +34,19 @@ namespace AjaxPeople.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditPerson (Person person)
+        public void EditPerson (Person person)
         {
             var manager = new PeopleManager(_connectionString);
             manager.Edit(person);
-            return Json(person);
+            
         }
 
         [HttpPost]
-        public IActionResult DeletePerson (int id)
+        public void DeletePerson (int id)
         {
             var manager = new PeopleManager(_connectionString);
             manager.Delete(id);
-            return Json(id);
+            
         }
         
     }
